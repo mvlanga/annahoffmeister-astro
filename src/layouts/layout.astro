@@ -1,0 +1,75 @@
+---
+import "@fontsource/inter";
+
+import "@/styles.css";
+
+import Footer from "@/components/Footer.astro";
+import { twMerge } from "tailwind-merge";
+import { clsx } from "clsx";
+
+type Props = {
+  containerClass?: string;
+};
+
+const { containerClass } = Astro.props;
+---
+
+<!doctype html>
+<html lang="de" class="scroll-smooth text-lg">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#465e69" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <meta
+      name="apple-mobile-web-app-title"
+      content="Webpack Tailwind Starter"
+    />
+    <meta name="application-name" content="Webpack Tailwind Starter" />
+    <meta name="msapplication-TileColor" content="#e2e8f0" />
+    <meta name="msapplication-config" content="browserconfig.xml" />
+    <meta name="theme-color" content="#e2e8f0" />
+
+    <slot name="head" />
+
+    <script
+      is:inline
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id={import.meta.env.UMAMI_TRACKING_CODE}
+      data-do-not-track="true"></script>
+
+    <style is:global>
+      @media not (prefers-reduced-motion) {
+        @view-transition {
+          navigation: auto;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main
+      class={twMerge(
+        clsx(
+          "container my-18 md:my-36 grid grid-cols-1 gap-18 md:gap-36",
+          containerClass,
+        ),
+      )}
+    >
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+
+  <script>
+    import "htmx.org";
+  </script>
+</html>

@@ -1,0 +1,25 @@
+---
+import { getAllResumeEntries } from "@/lib/contentful/utils";
+
+const resumeEntries = await getAllResumeEntries();
+
+type Props = {
+  title: string;
+};
+
+const { title } = Astro.props;
+---
+
+<section id="resume" class="flex flex-col gap-8 lg:flex-row">
+  <h2 class="text-2xl font-bold">{title}</h2>
+  <div class="grid grid-cols-[max-content_1fr] gap-x-8 gap-y-4">
+    {
+      resumeEntries.map(({ fields: { title, timeRange } }) => (
+        <>
+          <p>{timeRange}</p>
+          <p>{title}</p>
+        </>
+      ))
+    }
+  </div>
+</section>

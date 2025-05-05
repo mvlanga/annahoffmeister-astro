@@ -1,0 +1,21 @@
+---
+type Props = {
+  id: string;
+  title: string;
+};
+
+const { id, title } = Astro.props;
+---
+
+<section class="flex scroll-mt-8 flex-col gap-16 lg:gap-24" id={id}>
+  <div class="flex flex-col gap-8">
+    <div class="flex flex-col justify-between gap-8 lg:flex-row lg:gap-16">
+      <h2 class="text-3xl font-bold">{title}</h2>
+      <slot name="description" />
+    </div>
+  </div>
+
+  <slot name="image" />
+
+  <slot />
+</section>

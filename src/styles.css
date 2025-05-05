@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --color-black: #1d1d1d;
+
+  --breakpoint-xl: 64rem;
+  --breakpoint-2xl: initial;
+
+  --animate-marquee: marquee 60s linear infinite;
+}
+
+@layer base {
+  a:not(:disabled),
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  img {
+    @apply w-full max-w-none;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--spacing) * 4));
+    }
+  }
+
+  .prose {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply not-first:mt-12 not-last:mb-6;
+    }
+
+    h1 {
+      @apply text-4xl;
+    }
+
+    h2 {
+      @apply text-xl;
+    }
+
+    h3 {
+      @apply text-lg;
+    }
+
+    a {
+      @apply decoration-3 underline-offset-4 hover:underline;
+    }
+  }
+}
+
+@utility container {
+  @apply mx-auto px-8;
+}

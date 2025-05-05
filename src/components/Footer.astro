@@ -1,0 +1,75 @@
+---
+import type { LegalPage, SocialLink } from "@/lib/contentful/types";
+import { contentfulClient } from "@/lib/contentful/client";
+import CarbonBadge from "@/components/CarbonBadge.astro";
+import Link from "./Link.astro";
+
+const socialLinks = await contentfulClient.getEntries<SocialLink>({
+  content_type: "socialLink",
+});
+
+const legalPages = await contentfulClient.getEntries<LegalPage>({
+  content_type: "legalPage",
+});
+
+const additionalLinks = [
+  ...legalPages.items.map((item) => ({
+    title: item.fields.title,
+    link: `/legal/${item.fields.slug}`,
+    targetBlank: false,
+  })),
+  {
+    title: "Source Code",
+    link: "https://github.com/mvlanga/annahoffmeister-astro",
+    targetBlank: true,
+  },
+  {
+    title: "Designed & developed by mvlanga.com",
+    link: "https://mvlanga.com",
+    targetBlank: true,
+  },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer bg-black pt-24 pb-6 text-white">
+  <div class="container">
+    <h2 class="mb-16 text-5xl md:text-6xl">Kontakt</h2>
+    <div class="flex flex-wrap gap-4">
+      {
+        socialLinks.items.map((item) => (
+          <Link isOnDark href={item.fields.link} target="_blank">
+            {item.fields.title}
+          </Link>
+        ))
+      }
+    </div>
+    <div
+      class="mt-16 flex flex-wrap items-end justify-between gap-4 text-sm text-neutral-400"
+    >
+      <div>
+        <CarbonBadge />
+        <br />
+        <a class="transition-colors duration-300 hover:text-white" href="/">
+          &copy; Anna Hoffmeister {year}
+        </a>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        {
+          additionalLinks.map((item) => (
+              <a
+                href={item.link}
+                class="transition-colors duration-300 hover:text-white"
+                target={item.targetBlank ? "_blank" : "_self"}
+              >
+                {item.title}
+              </a>
+              <span class="text-neutral-600 last:hidden">|</span>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</footer>

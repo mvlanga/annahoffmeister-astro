@@ -1,0 +1,53 @@
+---
+import { getAllJournalismWorkSamples } from "@/lib/contentful/utils";
+import Button from "@/components/Button.astro";
+import JournalismWorkSampleItem from "@/components/JournalismWorkSampleItem.astro";
+
+export const prerender = false;
+export const partial = true;
+
+const requestUrl = new URL(Astro.request.url);
+
+const pageSizeFromUrl = requestUrl.searchParams.get("pageSize");
+
+const pageSize = pageSizeFromUrl ? parseInt(pageSizeFromUrl, 10) : 3;
+
+const journalismWorkSamples = await Astro.callAction(
+  getAllJournalismWorkSamples,
+  undefined,
+);
+
+const itemsToDisplay = journalismWorkSamples.slice(0, pageSize);
+
+const isMoreDataAvailable = itemsToDisplay.length >= pageSize;
+
+const hxValues = `{"pageSize": "${pageSize * 2}"}`;
+---
+
+<div class="flex flex-col gap-8" id="journalism-posts-container">
+  <h2 class="text-xl font-bold">Meine letzten Texte</h2>
+
+  <div class="flex flex-col gap-4">
+    {
+      itemsToDisplay.map(({ fields }) => (
+        <JournalismWorkSampleItem {...fields} />
+      ))
+    }
+  </div>
+
+  {
+    isMoreDataAvailable && (
+      <div class="text-end">
+        <Button
+          hx-get="/partials/journalism-work-samples"
+          hx-vals={hxValues}
+          hx-trigger="click"
+          hx-target="#journalism-posts-container"
+          hx-swap="innerHTML"
+        >
+          Weitere
+        </Button>
+      </div>
+    )
+  }
+</div>

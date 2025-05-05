@@ -1,0 +1,44 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { clsx } from "clsx";
+
+interface Props extends HTMLAttributes<"a"> {
+  class?: string;
+  isOnDark?: boolean;
+}
+
+const {
+  class: additionalClasses,
+  isOnDark = false,
+  ...attributes
+} = Astro.props;
+
+const containerClass = clsx(
+  "group relative z-0 inline-flex items-center justify-center overflow-hidden rounded-full px-8 py-4 gap-2 transition-colors border-1",
+  !isOnDark && "text-black hover:text-white",
+  isOnDark && "text-white hover:text-black",
+  additionalClasses,
+);
+
+const backgroundClass = clsx(
+  "-z-10 translate-y-full group-hover:translate-y-0 duration-300 ease-out transition-transform absolute h-[200%] w-[150%] rounded-[50%]",
+  !isOnDark && "bg-black",
+  isOnDark && "bg-white",
+);
+---
+
+<a class={containerClass} {...attributes}>
+  <span class={backgroundClass}></span>
+  <slot />
+  <svg
+    aria-hidden="true"
+    class="inline-block min-h-6 min-w-6 -rotate-45 fill-current"
+    xmlns="http://www.w3.org/2000/svg"
+    height="24px"
+    viewBox="0 -960 960 960"
+    width="24px"
+  >
+    <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"
+    ></path>
+  </svg>
+</a>

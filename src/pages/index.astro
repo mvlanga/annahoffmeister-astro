@@ -1,0 +1,113 @@
+---
+import Layout from "@/layouts/layout.astro";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import { getHomePageEntry } from "@/lib/contentful/utils";
+import PodcastSample from "@/components/PodcastSample.astro";
+import ModerationWorkSamples from "@/components/ModerationWorkSamples.astro";
+import SkillArea from "@/components/SkillArea.astro";
+import Resume from "@/components/Resume.astro";
+import ClientRow from "@/components/ClientRow.astro";
+import JournalismWorkSamples from "@/components/JournalismWorkSamples.astro";
+import ContentfulImage from "@/components/ContentfulImage.astro";
+
+const {
+  seoTitle,
+  seoDescription,
+  heroTitle,
+  heroSubline,
+  heroImage,
+  journalismTitle,
+  journalismDescription,
+  journalismImage,
+  journalismWorkSamplesTitle,
+  journalismWorkSamplesLoadMoreText,
+  journalismClientsTitle,
+  moderationTitle,
+  moderationDescription,
+  moderationImage,
+  moderationWorkSamplesTitle,
+  moderationClientsTitle,
+  resumeTitle,
+} = await getHomePageEntry();
+---
+
+<Layout>
+  <title slot="head">{seoTitle}</title>
+  <meta slot="head" name="description" content={seoDescription} />
+  <meta slot="head" property="og:image" content="/og.jpeg" />
+
+  <section class="grid-cols-2 items-center gap-12 lg:grid">
+    <div class="text-balance lg:py-12">
+      <h1 class="mb-8 text-4xl leading-tight font-semibold md:text-6xl">
+        {heroTitle}
+      </h1>
+      <h2
+        class="prose text-xl leading-tight md:text-4xl"
+        set:html={documentToHtmlString(heroSubline)}
+      />
+    </div>
+    <div class="mt-12 h-full lg:mt-0 lg:text-end">
+      {
+        heroImage && heroImage.fields.file && (
+          <ContentfulImage
+            class="object-cover lg:h-full"
+            file={heroImage.fields.file}
+            alt="Porträt von Anna Hoffmeister"
+            width={800}
+          />
+        )
+      }
+    </div>
+  </section>
+
+  <SkillArea id="journalism" title={journalismTitle}>
+    <div
+      slot="description"
+      class="max-w-prose"
+      set:html={documentToHtmlString(journalismDescription)}
+    />
+
+    {
+      journalismImage && journalismImage.fields.file && (
+        <ContentfulImage
+          file={journalismImage.fields.file}
+          alt="Anna Hoffmeister im Gespräch mit einer Person des öffentlichen Lebens"
+          width={1080}
+        />
+      )
+    }
+
+    <JournalismWorkSamples
+      title={journalismWorkSamplesTitle}
+      loadMoreText={journalismWorkSamplesLoadMoreText}
+    />
+
+    <ClientRow typeOfWork="journalism" title={journalismClientsTitle} />
+  </SkillArea>
+
+  <SkillArea id="moderation" title={moderationTitle}>
+    <div
+      slot="description"
+      class="max-w-prose"
+      set:html={documentToHtmlString(moderationDescription)}
+    />
+
+    {
+      moderationImage && moderationImage.fields.file && (
+        <ContentfulImage
+          file={moderationImage.fields.file}
+          alt="Anna Hoffmeister bei der Moderation eines Workshops"
+          width={1080}
+        />
+      )
+    }
+
+    <ModerationWorkSamples title={moderationWorkSamplesTitle} />
+
+    <PodcastSample />
+
+    <ClientRow typeOfWork="moderation" title={moderationClientsTitle} />
+  </SkillArea>
+
+  <Resume title={resumeTitle} />
+</Layout>

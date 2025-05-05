@@ -1,0 +1,36 @@
+---
+import type { AssetFile } from "contentful";
+import {
+  optimizeContentfulImage,
+  type OptimizeContentfulImageProps,
+} from "../lib/contentful/optimize-contentful-image";
+import { Image } from "astro:assets";
+import { clsx } from "clsx";
+
+type Props = {
+  file: AssetFile;
+  alt: string;
+  class?: string;
+} & Partial<OptimizeContentfulImageProps>;
+
+const {
+  file,
+  alt,
+  class: additionalClasses,
+  ...optimizeContentfulImageProps
+} = Astro.props;
+
+const { url, width, height } = optimizeContentfulImage(
+  file,
+  optimizeContentfulImageProps,
+);
+---
+
+<Image
+  class={clsx("inline-block", additionalClasses)}
+  src={url}
+  width={width}
+  height={height}
+  alt={alt}
+  loading="eager"
+/>

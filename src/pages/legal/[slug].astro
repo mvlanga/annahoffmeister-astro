@@ -1,0 +1,28 @@
+---
+import Layout from "@/layouts/layout.astro";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { LegalPage } from "@/lib/contentful/types";
+import { contentfulClient } from "@/lib/contentful/client";
+
+export async function getStaticPaths() {
+  const entries = await contentfulClient.getEntries<LegalPage>({
+    content_type: "legalPage",
+  });
+
+  return entries.items.map((item) => ({
+    params: { slug: item.fields.slug },
+    props: {
+      title: item.fields.title,
+      content: documentToHtmlString(item.fields.content),
+    },
+  }));
+}
+
+const { title, content } = Astro.props;
+---
+
+<Layout containerClass="md:my-36">
+  <title slot="head">{title} - Anna Hoffmeister</title>
+
+  <article class="prose" set:html={content} />
+</Layout>
