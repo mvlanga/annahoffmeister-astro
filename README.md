@@ -4,7 +4,7 @@ The website <a href="https://annahoffmeister.de" target="_blank">annahoffmeister
 with <a href="https://astro.build/" target="_blank">Astro</a> and hosted
 on <a href="https://www.netlify.com/" target="_blank">Netlify</a>.
 
-<img src="https://api.netlify.com/api/v1/badges/a21ac0a2-52a6-4487-b3e3-489f0ce4bfa8/deploy-status" alt="Netlify Status" />
+<img src="https://api.netlify.com/api/v1/badges/dfa347c3-3f68-4f87-947d-2473fcb91c8e/deploy-status" alt="Netlify Status" />
 
 ## 🛠 Installation & set up
 
