@@ -51,8 +51,8 @@ const { title } = Astro.props;
             aria-labelledby={`moderation-work-sample-${index}__title`}
           >
             <div
-              class="px-6 pt-6 not-group-last:pb-5 md:px-8 md:pt-8"
-              set:html={documentToHtmlString(sample.fields.content)}
+              class="prose px-6 pt-6 not-group-last:pb-5 md:px-8 md:pt-8"
+              set:html={documentToHtmlString(sample.fields.content, {preserveWhitespace: true})}
             />
           </div>
         </div>
