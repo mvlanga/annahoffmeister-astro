@@ -37,7 +37,7 @@ const {
   <meta slot="head" property="og:image" content="/og.jpeg" />
 
   <section class="grid-cols-2 items-center gap-12 lg:grid">
-    <div class="text-balance lg:py-12">
+    <div class="text-balance">
       <h1 class="mb-8 text-4xl leading-tight font-semibold md:text-6xl">
         {heroTitle}
       </h1>
@@ -50,7 +50,7 @@ const {
       {
         heroImage && heroImage.fields.file && (
           <ContentfulImage
-            class="object-cover lg:h-full"
+            class="object-contain lg:h-full"
             file={heroImage.fields.file}
             alt="Porträt von Anna Hoffmeister"
             width={800}
