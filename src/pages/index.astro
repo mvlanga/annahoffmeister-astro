@@ -26,6 +26,7 @@ const {
   moderationDescription,
   moderationImage,
   moderationWorkSamplesTitle,
+  moderationWorkSamplesLoadMoreText,
   moderationClientsTitle,
   resumeTitle,
 } = await getHomePageEntry();
@@ -102,7 +103,7 @@ const {
       )
     }
 
-    <ModerationWorkSamples title={moderationWorkSamplesTitle} />
+    <ModerationWorkSamples title={moderationWorkSamplesTitle} loadMoreText={moderationWorkSamplesLoadMoreText} />
 
     <PodcastSample />
 

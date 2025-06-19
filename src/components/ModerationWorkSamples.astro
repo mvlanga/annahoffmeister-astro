@@ -1,6 +1,7 @@
 ---
-import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import { getAllModerationWorkSamples } from "@/lib/contentful/utils";
+import Button from "./Button.astro";
+import ModerationWorkSamplesItem from "./ModerationWorkSamplesItem.astro";
 
 const moderationWorkSamples = await Astro.callAction(
   getAllModerationWorkSamples,
@@ -9,58 +10,56 @@ const moderationWorkSamples = await Astro.callAction(
 
 type Props = {
   title: string;
+  loadMoreText: string;
 };
 
-const { title } = Astro.props;
+const { title, loadMoreText } = Astro.props;
 ---
 
-<div class="flex flex-col gap-8">
-  <h2 class="text-xl font-bold">{title}</h2>
+<div id="moderation-posts-container" {...{ 'hx-on::before-swap': 'destroyAccordions()' }}>
+  <div class="flex flex-col gap-8">
+    <h2 class="text-xl font-bold">{title}</h2>
 
-  <div class="hs-accordion-group flex flex-col gap-4">
+    <div class="hs-accordion-group flex flex-col gap-4">
+      {
+        moderationWorkSamples.slice(0, 3).map(({ fields }, index) => (
+         <ModerationWorkSamplesItem {...fields} index={index} />
+        ))
+      }
+    </div>
+
     {
-      moderationWorkSamples.map((sample, index) => (
-        <div class="hs-accordion group">
-          <button
-            aria-controls={`moderation-work-sample-${index}__content`}
-            class="hs-accordion-toggle relative flex w-full cursor-pointer items-center justify-between gap-8 bg-neutral-100 p-6 text-left transition-colors duration-500 group-[.active]:bg-black group-[.active]:text-white hover:bg-black hover:text-white md:p-8"
+      moderationWorkSamples.length > 3 && (
+        <div class="text-end">
+          <Button
+            hx-get="/partials/moderation-work-samples"
+            hx-vals='{"pageSize": "6"}'
+            hx-trigger="click"
+            hx-target="#moderation-posts-container"
+            hx-swap="innerHTML"
           >
-            <span class="flex w-full flex-col justify-between gap-x-8 gap-y-4 md:flex-row">
-              <span
-                id={`moderation-work-sample-${index}__title`}
-                class="font-bold"
-              >
-                {sample.fields.title}
-              </span>
-              <span class="md:text-end">{sample.fields.client}</span>
-            </span>
-            <svg
-              aria-hidden="true"
-              class="min-h-6 min-w-6 transition-all duration-500 group-hover:fill-white group-[.active]:rotate-180 group-[.active]:fill-white"
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-            >
-              <path d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z" />
-            </svg>
-          </button>
-          <div
-            id={`moderation-work-sample-${index}__content`}
-            class="hs-accordion-content hidden overflow-hidden transition-[height] duration-500"
-            aria-labelledby={`moderation-work-sample-${index}__title`}
-          >
-            <div
-              class="prose px-6 pt-6 not-group-last:pb-5 md:px-8 md:pt-8"
-              set:html={documentToHtmlString(sample.fields.content, {preserveWhitespace: true})}
-            />
-          </div>
+            {loadMoreText}
+          </Button>
         </div>
-      ))
+      )
     }
   </div>
 </div>
 
 <script>
   import "@preline/accordion";
+</script>
+
+<script is:inline>
+function destroyAccordions() {
+  const accordions = document.querySelectorAll(".hs-accordion");
+
+  accordions.forEach((el) => {
+    const {element} = HSAccordion.getInstance(el, true);
+
+    if (element) {
+        element.destroy();
+      }
+    });
+  }
 </script>
