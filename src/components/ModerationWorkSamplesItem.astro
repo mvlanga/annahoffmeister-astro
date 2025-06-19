@@ -1,28 +1,26 @@
 ---
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import type { Document } from "@contentful/rich-text-types";
-import { slugify } from "../lib/common";
 
 type Props = {
   title: string;
   content: Document;
   client: string;
+  index: number;
 };
 
-const { title, content, client } = Astro.props;
-
-const id = slugify(title);
+const { title, content, client, index } = Astro.props;
 
 ---
 
 <div class="hs-accordion group">
   <button
-    aria-controls={`moderation-work-sample-${id}__content`}
+    aria-controls={`moderation-work-sample-${index}__content`}
     class="hs-accordion-toggle relative flex w-full cursor-pointer items-center justify-between gap-8 bg-neutral-100 p-6 text-left transition-colors duration-500 group-[.active]:bg-black group-[.active]:text-white hover:bg-black hover:text-white md:p-8"
   >
             <span class="flex w-full flex-col justify-between gap-x-8 gap-y-4 md:flex-row">
               <span
-                id={`moderation-work-sample-${id}__title`}
+                id={`moderation-work-sample-${index}__title`}
                 class="font-bold"
               >
                 {title}
@@ -41,9 +39,9 @@ const id = slugify(title);
     </svg>
   </button>
   <div
-    id={`moderation-work-sample-${id}__content`}
+    id={`moderation-work-sample-${index}__content`}
     class="hs-accordion-content hidden overflow-hidden transition-[height] duration-500"
-    aria-labelledby={`moderation-work-sample-${id}__title`}
+    aria-labelledby={`moderation-work-sample-${index}__title`}
   >
     <div
       class="prose px-6 pt-6 not-group-last:pb-5 md:px-8 md:pt-8"
