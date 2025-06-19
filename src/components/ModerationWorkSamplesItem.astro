@@ -1,0 +1,53 @@
+---
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { Document } from "@contentful/rich-text-types";
+import { slugify } from "../lib/common";
+
+type Props = {
+  title: string;
+  content: Document;
+  client: string;
+};
+
+const { title, content, client } = Astro.props;
+
+const id = slugify(title);
+
+---
+
+<div class="hs-accordion group">
+  <button
+    aria-controls={`moderation-work-sample-${id}__content`}
+    class="hs-accordion-toggle relative flex w-full cursor-pointer items-center justify-between gap-8 bg-neutral-100 p-6 text-left transition-colors duration-500 group-[.active]:bg-black group-[.active]:text-white hover:bg-black hover:text-white md:p-8"
+  >
+            <span class="flex w-full flex-col justify-between gap-x-8 gap-y-4 md:flex-row">
+              <span
+                id={`moderation-work-sample-${id}__title`}
+                class="font-bold"
+              >
+                {title}
+              </span>
+              <span class="md:text-end">{client}</span>
+            </span>
+    <svg
+      aria-hidden="true"
+      class="min-h-6 min-w-6 transition-all duration-500 group-hover:fill-white group-[.active]:rotate-180 group-[.active]:fill-white"
+      xmlns="http://www.w3.org/2000/svg"
+      height="24px"
+      viewBox="0 -960 960 960"
+      width="24px"
+    >
+      <path d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z" />
+    </svg>
+  </button>
+  <div
+    id={`moderation-work-sample-${id}__content`}
+    class="hs-accordion-content hidden overflow-hidden transition-[height] duration-500"
+    aria-labelledby={`moderation-work-sample-${id}__title`}
+  >
+    <div
+      class="prose px-6 pt-6 not-group-last:pb-5 md:px-8 md:pt-8"
+      set:html={documentToHtmlString(content, {preserveWhitespace: true})}
+    />
+  </div>
+</div>

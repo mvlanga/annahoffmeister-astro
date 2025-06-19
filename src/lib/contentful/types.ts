@@ -26,6 +26,7 @@ export type HomePage = {
     moderationDescription: EntryFieldTypes.RichText;
     moderationImage: EntryFieldTypes.AssetLink;
     moderationWorkSamplesTitle: EntryFieldTypes.Text;
+    moderationWorkSamplesLoadMoreText: EntryFieldTypes.Text;
     moderationClientsTitle: EntryFieldTypes.Text;
     resumeTitle: EntryFieldTypes.Text;
   };

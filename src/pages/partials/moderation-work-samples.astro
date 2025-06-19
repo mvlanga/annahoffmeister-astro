@@ -1,14 +1,14 @@
 ---
-import { getAllJournalismWorkSamples, getHomePageEntry } from "@/lib/contentful/utils";
+import { getAllModerationWorkSamples, getHomePageEntry } from "@/lib/contentful/utils";
 import Button from "@/components/Button.astro";
-import JournalismWorkSampleItem from "@/components/JournalismWorkSampleItem.astro";
+import ModerationWorkSamplesItem from "@/components/ModerationWorkSamplesItem.astro";
 
 export const prerender = false;
 export const partial = true;
 
 const {
-  journalismWorkSamplesTitle,
-  journalismWorkSamplesLoadMoreText,
+  moderationWorkSamplesTitle,
+  moderationWorkSamplesLoadMoreText,
 } = await getHomePageEntry();
 
 const requestUrl = new URL(Astro.request.url);
@@ -17,12 +17,12 @@ const pageSizeFromUrl = requestUrl.searchParams.get("pageSize");
 
 const pageSize = pageSizeFromUrl ? parseInt(pageSizeFromUrl, 10) : 3;
 
-const journalismWorkSamples = await Astro.callAction(
-  getAllJournalismWorkSamples,
+const moderationWorkSamples = await Astro.callAction(
+  getAllModerationWorkSamples,
   undefined,
 );
 
-const itemsToDisplay = journalismWorkSamples.slice(0, pageSize);
+const itemsToDisplay = moderationWorkSamples.slice(0, pageSize);
 
 const isMoreDataAvailable = itemsToDisplay.length >= pageSize;
 
@@ -30,12 +30,12 @@ const hxValues = `{"pageSize": "${pageSize * 2}"}`;
 ---
 
 <div class="flex flex-col gap-8">
-  <h2 class="text-xl font-bold">{journalismWorkSamplesTitle}</h2>
+  <h2 class="text-xl font-bold">{moderationWorkSamplesTitle}</h2>
 
-  <div class="flex flex-col gap-4">
+  <div class="hs-accordion-group flex flex-col gap-4">
     {
       itemsToDisplay.map(({ fields }) => (
-        <JournalismWorkSampleItem {...fields} />
+        <ModerationWorkSamplesItem {...fields} />
       ))
     }
   </div>
@@ -44,15 +44,21 @@ const hxValues = `{"pageSize": "${pageSize * 2}"}`;
     isMoreDataAvailable && (
       <div class="text-end">
         <Button
-          hx-get="/partials/journalism-work-samples"
+          hx-get="/partials/moderation-work-samples"
           hx-vals={hxValues}
           hx-trigger="click"
-          hx-target="#journalism-posts-container"
+          hx-target="#moderation-posts-container"
           hx-swap="innerHTML"
         >
-          {journalismWorkSamplesLoadMoreText}
+          {moderationWorkSamplesLoadMoreText}
         </Button>
       </div>
     )
   }
 </div>
+
+<script>
+  import HSAccordion from "@preline/accordion";
+
+  HSAccordion.autoInit();
+</script>
