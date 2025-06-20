@@ -11,12 +11,14 @@ type Props = {
   file: AssetFile;
   alt: string;
   class?: string;
+  priority?: boolean;
 } & Partial<OptimizeContentfulImageProps>;
 
 const {
   file,
   alt,
   class: additionalClasses,
+  priority = false,
   ...optimizeContentfulImageProps
 } = Astro.props;
 
@@ -32,5 +34,5 @@ const { url, width, height } = optimizeContentfulImage(
   width={width}
   height={height}
   alt={alt}
-  loading="eager"
+  priority={priority}
 />
