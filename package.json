@@ -20,7 +20,7 @@
     "@tailwindcss/vite": "^4.1.10",
     "astro": "^5.10.0",
     "contentful": "^11.7.2",
-    "htmx.org": "^2.0.4",
+    "htmx.org": "^2.0.5",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.4",
     "typescript": "^5.8.3"
