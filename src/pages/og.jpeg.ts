@@ -98,7 +98,7 @@ export const GET = async () => {
     })
     .toBuffer();
 
-  return new Response(jpeg, {
+  return new Response(new Uint8Array(jpeg), {
     headers: {
       "Content-Type": "image/jpeg",
     },
