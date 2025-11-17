@@ -50,19 +50,35 @@ export const getClientsByTypeOfWork = async (typeOfWork: ClientTypeOfWork) => {
 };
 
 export const getHomePageEntry = async () => {
-  const homePage =
-    await contentfulClient.withoutUnresolvableLinks.getEntry<HomePage>(
-      "5uanwBjyBfbJGwLamfmZQ6",
+  const homePageEntries =
+    await contentfulClient.withoutUnresolvableLinks.getEntries<HomePage>(
+      {
+        content_type: "homePage",
+        order: ["-sys.updatedAt"],
+      }
     );
 
-  return homePage.fields;
+  const latestHomePage = homePageEntries.items[0];
+
+  if (!latestHomePage) {
+    throw new Error("Could not load home page entry")
+  }
+
+  return latestHomePage.fields;
 };
 
 export const getPodcastSample = async () => {
-  const podcastSample =
-    await contentfulClient.withoutUnresolvableLinks.getEntry<PodcastSample>(
-      "2MkAPEH7lGIhqdLz3xfEXq",
-    );
+  const podcastSampleEntries =
+    await contentfulClient.withoutUnresolvableLinks.getEntries<PodcastSample>({
+      content_type: "podcastSample",
+      order: ["-sys.updatedAt"],
+    });
 
-  return podcastSample.fields;
+  const latestPodcastSample = podcastSampleEntries.items[0];
+
+  if (!latestPodcastSample) {
+    throw new Error("Could not fetch podcast entry")
+  }
+
+  return latestPodcastSample.fields;
 };
