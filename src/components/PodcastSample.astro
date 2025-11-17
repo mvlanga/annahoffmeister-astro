@@ -1,12 +1,11 @@
 ---
 import { Image } from "astro:assets";
 import { getPodcastSample } from "@/lib/contentful/utils";
-import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 import Button from "@/components/Button.astro";
 import PlayIcon from "@/assets/img/play.svg";
 import PauseIcon from "@/assets/img/pause.svg";
 import Link from "@/components/Link.astro";
-import { getSpotifyEpisode } from "../lib/spotify";
+import { getSpotifyEpisode } from "@/lib/spotify";
 
 const { title, spotifyShareUrl, description } = await getPodcastSample();
 
