@@ -10,6 +10,9 @@ export default defineConfig({
     imageCDN: false
   }),
   image: {
-    domains: ['ctfassets.net'],
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: '**.ctfassets.net',
+    }],
   },
 });
