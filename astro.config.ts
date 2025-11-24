@@ -6,8 +6,5 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  adapter: netlify({
-    imageCDN: false,
-    cacheOnDemandPages: false,
-  }),
+  adapter: netlify(),
 });
