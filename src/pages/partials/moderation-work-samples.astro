@@ -35,7 +35,7 @@ const hxValues = `{"pageSize": "${pageSize * 2}"}`;
   <div class="hs-accordion-group flex flex-col gap-4">
     {
       itemsToDisplay.map(({ fields }, index) => (
-        <ModerationWorkSamplesItem {...fields} index={index} />
+        <ModerationWorkSamplesItem title={fields.title} content={fields.content} client={fields.client} index={index} />
       ))
     }
   </div>
