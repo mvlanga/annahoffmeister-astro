@@ -4,6 +4,8 @@ import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import type { LegalPage } from "@/lib/contentful/types";
 import { contentfulClient } from "@/lib/contentful/client";
 
+export const prerender = false;
+
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries<LegalPage>({
     content_type: "legalPage",

@@ -3,6 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import netlify from "@astrojs/netlify";
 
 export default defineConfig({
+  output: "server",
   vite: {
     plugins: [tailwindcss()],
   },
