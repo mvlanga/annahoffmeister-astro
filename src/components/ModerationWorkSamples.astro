@@ -23,7 +23,7 @@ const { title, loadMoreText } = Astro.props;
     <div class="hs-accordion-group flex flex-col gap-4">
       {
         moderationWorkSamples.slice(0, 3).map(({ fields }, index) => (
-         <ModerationWorkSamplesItem {...fields} index={index} />
+         <ModerationWorkSamplesItem title={fields.title} content={fields.content} client={fields.client} index={index} />
         ))
       }
     </div>
@@ -47,7 +47,9 @@ const { title, loadMoreText } = Astro.props;
 </div>
 
 <script>
-  import "@preline/accordion";
+  import HSAccordion from "@preline/accordion";
+
+  HSAccordion.autoInit();
 </script>
 
 <script is:inline>
@@ -55,11 +57,9 @@ function destroyAccordions() {
   const accordions = document.querySelectorAll(".hs-accordion");
 
   accordions.forEach((el) => {
-    const {element} = HSAccordion.getInstance(el, true);
+    const instance = HSAccordion.getInstance(el, true);
 
-    if (element) {
-        element.destroy();
-      }
+    instance?.destroy();
     });
   }
 </script>
