@@ -27,10 +27,10 @@
   },
   "devDependencies": {
     "clsx": "^2.1.1",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "satori": "^0.25.0",
+    "satori": "^0.26.0",
     "sharp": "^0.34.5"
   }
 }
