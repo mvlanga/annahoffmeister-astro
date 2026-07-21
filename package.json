@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
-    "@astrojs/netlify": "^7.0.4",
+    "@astrojs/netlify": "^8.1.2",
     "@contentful/rich-text-html-renderer": "^17.1.6",
     "@fontsource/inter": "^5.2.8",
     "@preline/accordion": "^4.1.3",
